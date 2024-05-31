@@ -1,0 +1,31 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          work-wechat-scan:
+            # client-id为企业微信 的企业ID
+            # 下面client-id是假的，你用你自己的企业ID
+            client-id:
+            # client-secret企业微信对应应用的secret，
+            # 每个企业微信应用都有独立的secret，不要搞错
+            # 下面client-secret假的，你用你自己创建的企业微信应用secret
+            client-secret:  nvzGI4Alp3zxxxxxxxKbnfTEets5W8
+            authorization-grant-type: authorization_code
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+        provider:
+          work-wechat-scan:
+            authorization-uri: https://open.work.weixin.qq.com/wwopen/sso/qrConnect
+            token-uri: https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={}&corpsecret={}
+            user-info-uri: https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo
+
+
+
+GET_USERINFO_URL: https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+GET_USERDETAIL_URL: https://qyapi.weixin.qq.com/cgi-bin/user/getuserdetail?access_token=ACCESS_TOK
+getUser_url: https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&userid=USERID
+url: cgi-bin/gettoken
+corpid: wwe7da22fd77ddf525
+corpsecret: zh8t1RwSo2AAAZFHW4Bc4x5T42gDiBotT-iuJBc3wz0
+getAccessToken: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+"https://qyapi.weixin.qq.com/cgi-bin/service/auth/getuserinfo3rd?suite_access_token=SUITE_ACCESS_TOKEN&code=CODE"

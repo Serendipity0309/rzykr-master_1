@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="examination-actV4" name="examination-actV4" isExecutable="true">
+    <startEvent id="sid-1a1b5508-1c75-4ad9-a7e6-f00b60b80bca" name="流程开始"/>
+    <userTask id="invigilator_get_exam" name="监考老师领卷">
+      <documentation>说明：监考老师领卷</documentation>
+    </userTask>
+    <userTask id="invigilator_hand_exam" name="监考老师交卷">
+      <documentation>说明：监考老师交卷</documentation>
+    </userTask>
+    <userTask id="teacher_get_exam" name="授课老师领卷">
+      <documentation>说明：授课老师领卷</documentation>
+    </userTask>
+    <userTask id="teacher_hand_exam" name="授课老师交卷">
+      <documentation>说明：授课老师交卷</documentation>
+    </userTask>
+    <userTask id="supervisory_approval" name="督导审批">
+      <documentation>说明：督导审批</documentation>
+    </userTask>
+    <endEvent id="sid-802b57e0-3539-4935-b97b-4398fe667cc4" name="流程结束"/>
+    <sequenceFlow id="sid-71aa72c6-564a-4cc0-b147-9082662caf18" sourceRef="sid-1a1b5508-1c75-4ad9-a7e6-f00b60b80bca" targetRef="invigilator_get_exam"/>
+    <sequenceFlow id="sid-c931fe3b-0b7b-4e88-9a60-0b8d19c728ef" sourceRef="invigilator_get_exam" targetRef="invigilator_hand_exam"/>
+    <sequenceFlow id="sid-3f0b5a8b-82a6-4ab0-8441-2d16f1482a81" sourceRef="invigilator_hand_exam" targetRef="teacher_get_exam"/>
+    <sequenceFlow id="sid-a79dfe99-61ae-4678-946f-290fea03c37d" sourceRef="teacher_get_exam" targetRef="teacher_hand_exam"/>
+    <sequenceFlow id="sid-a89e30bb-9a7e-4944-adf7-6eb6b7d7c962" sourceRef="teacher_hand_exam" targetRef="supervisory_approval"/>
+    <sequenceFlow id="sid-a404d3fe-af17-48cb-9dcb-8b1106531ff1" sourceRef="supervisory_approval" targetRef="sid-802b57e0-3539-4935-b97b-4398fe667cc4">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-db0ecc00-34d1-452d-a155-c915ab1f095b" sourceRef="supervisory_approval" targetRef="teacher_hand_exam">
+      <conditionExpression>${isPass==0}</conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_examination-actV4">
+    <bpmndi:BPMNPlane bpmnElement="examination-actV4" id="BPMNPlane_examination-actV4">
+      <bpmndi:BPMNShape id="shape-cde94e45-e1eb-47ca-9552-aa3170f093b7" bpmnElement="sid-1a1b5508-1c75-4ad9-a7e6-f00b60b80bca">
+        <omgdc:Bounds x="-370.0" y="-10.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-ac2709f6-df84-439d-b648-46170c4dd079" bpmnElement="invigilator_get_exam">
+        <omgdc:Bounds x="-275.0" y="-35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-52817531-038b-4a19-a17b-6ae7e243edd7" bpmnElement="invigilator_hand_exam">
+        <omgdc:Bounds x="-140.0" y="-35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-d6c14510-a883-4ed5-8e52-08af84fe7020" bpmnElement="teacher_get_exam">
+        <omgdc:Bounds x="5.0" y="-35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-29580230-dee2-419e-bde3-09f9ee1cd70d" bpmnElement="teacher_hand_exam">
+        <omgdc:Bounds x="150.0" y="-35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-1ea390e0-2a32-476d-b7c2-0ff59307754a" bpmnElement="supervisory_approval">
+        <omgdc:Bounds x="285.0" y="-35.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-87127fab-b8ff-45fe-b5e5-98b9774fdf6e" bpmnElement="sid-802b57e0-3539-4935-b97b-4398fe667cc4">
+        <omgdc:Bounds x="435.0" y="-10.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-93514410-af9c-4e12-ba1a-e5fbb10d2359" bpmnElement="sid-71aa72c6-564a-4cc0-b147-9082662caf18">
+        <omgdi:waypoint x="-340.0" y="5.0"/>
+        <omgdi:waypoint x="-275.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-664e48e2-531c-49ac-baea-660299426514" bpmnElement="sid-c931fe3b-0b7b-4e88-9a60-0b8d19c728ef">
+        <omgdi:waypoint x="-175.0" y="5.0"/>
+        <omgdi:waypoint x="-140.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-5dbae2ed-cc65-4c20-9d59-05c4b8e6c1ee" bpmnElement="sid-3f0b5a8b-82a6-4ab0-8441-2d16f1482a81">
+        <omgdi:waypoint x="-40.0" y="5.0"/>
+        <omgdi:waypoint x="5.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-7f296c45-a34a-495d-9ad5-4a9984592bef" bpmnElement="sid-a79dfe99-61ae-4678-946f-290fea03c37d">
+        <omgdi:waypoint x="105.0" y="5.0"/>
+        <omgdi:waypoint x="150.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-81095dcd-ad25-40e3-9731-85481f15fa87" bpmnElement="sid-a89e30bb-9a7e-4944-adf7-6eb6b7d7c962">
+        <omgdi:waypoint x="250.0" y="5.0"/>
+        <omgdi:waypoint x="285.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-a68f14bb-b7fc-433b-8727-05e98f6d89f0" bpmnElement="sid-a404d3fe-af17-48cb-9dcb-8b1106531ff1">
+        <omgdi:waypoint x="385.0" y="5.0"/>
+        <omgdi:waypoint x="435.0" y="5.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-36dc627f-86e5-4413-b1c1-fed850624af6" bpmnElement="sid-db0ecc00-34d1-452d-a155-c915ab1f095b">
+        <omgdi:waypoint x="335.0" y="-35.0"/>
+        <omgdi:waypoint x="335.0" y="-65.0"/>
+        <omgdi:waypoint x="200.0" y="-64.99999"/>
+        <omgdi:waypoint x="200.0" y="-35.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzyk.notice.mapper.ProcessExamMapper">
+    
+    <resultMap type="ProcessExam" id="ProcessExamResult">
+        <result property="id"    column="id"    />
+        <result property="processId"    column="process_id"    />
+        <result property="examdataId"    column="examdata_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="codeitemdesc"    column="codeitemdesc"    />
+    </resultMap>
+
+    <sql id="selectProcessExamVo">
+        select id, process_id,user_id, examdata_id,codeitemdesc from process_exam
+    </sql>
+
+    <select id="selectProcessExamList" parameterType="ProcessExam" resultMap="ProcessExamResult">
+        <include refid="selectProcessExamVo"/>
+        <where>  
+            <if test="processId != null  and processId != ''"> and process_id = #{processId}</if>
+            <if test="examdataId != null "> and examdata_id = #{examdataId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="codeitemdesc != null "> and codeitemdesc = #{codeitemdesc}</if>
+        </where>
+    </select>
+    
+    <select id="selectProcessExamById" parameterType="String" resultMap="ProcessExamResult">
+        <include refid="selectProcessExamVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertProcessExam" parameterType="ProcessExam" useGeneratedKeys="true" keyProperty="id">
+        insert into process_exam
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="processId != null">process_id,</if>
+            <if test="examdataId != null">examdata_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="codeitemdesc != null">codeitemdesc,</if>
+
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="processId != null">#{processId},</if>
+            <if test="examdataId != null">#{examdataId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="codeitemdesc != null">#{codeitemdesc},</if>
+
+         </trim>
+    </insert>
+
+    <update id="updateProcessExam" parameterType="ProcessExam">
+        update process_exam
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="processId != null">process_id = #{processId},</if>
+            <if test="examdataId != null">examdata_id = #{examdataId},</if>
+            <if test="codeitemdesc != null">codeitemdesc = #{codeitemdesc},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProcessExamById" parameterType="String">
+        delete from process_exam where id = #{id}
+    </delete>
+
+    <delete id="deleteProcessExamByIds" parameterType="String">
+        delete from process_exam where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

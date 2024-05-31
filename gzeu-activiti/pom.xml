@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>gzeu</artifactId>
+        <groupId>com.gzeu</groupId>
+        <version>3.8.4</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>gzeu-activiti</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter</artifactId>
+            <version>${activeti.version}</version>
+            <exclusions>
+                <exclusion><!-- 排除activiti的mybatis，避免和外面的mybatis-plus冲突 -->
+                    <artifactId>mybatis</artifactId>
+                    <groupId>org.mybatis</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring</artifactId>
+            <version>${activeti.version}</version>
+            <exclusions>
+                <exclusion><!-- 排除activiti的mybatis，避免和外面的mybatis-plus冲突 -->
+                    <artifactId>mybatis</artifactId>
+                    <groupId>org.mybatis</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-bpmn-model</artifactId>
+            <version>${activeti.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-bpmn-converter</artifactId>
+            <version>${activeti.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-json-converter</artifactId>
+            <version>${activeti.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-bpmn-layout</artifactId>
+            <version>${activeti.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gzeu</groupId>
+            <artifactId>gzeu-framework</artifactId>
+        </dependency>
+        <!--业务模块-->
+        <dependency>
+            <groupId>com.gzeu</groupId>
+            <artifactId>gzeu-api</artifactId>
+        </dependency>
+    </dependencies>
+</project>

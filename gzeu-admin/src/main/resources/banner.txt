@@ -1,0 +1,18 @@
+Application Version: ${GZEU.version}
+Spring Boot Version: ${spring-boot.version}
+        GGGGGGGGGGGGG ZZZZZZZZZZZZZZZZZZZ EEEEEEEEEEEEEEEEEEEEEE UUUUUUUU     UUUUUUUU
+     GGG::::::::::::G Z:::::::::::::::::Z E::::::::::::::::::::E U::::::U     U::::::U
+   GG:::::::::::::::G Z:::::::::::::::::Z E::::::::::::::::::::E U::::::U     U::::::U
+  G:::::GGGGGGGG::::G Z:::ZZZZZZZZ:::::Z  EE::::::EEEEEEEEE::::E UU:::::U     U:::::UU
+ G:::::G       GGGGGG ZZZZZ     Z:::::Z     E:::::E       EEEEEE  U:::::U     U:::::U
+G:::::G                       Z:::::Z       E:::::E               U:::::D     D:::::U
+G:::::G                      Z:::::Z        E::::::EEEEEEEEEE     U:::::D     D:::::U
+G:::::G    GGGGGGGGGG       Z:::::Z         E:::::::::::::::E     U:::::D     D:::::U
+G:::::G    G::::::::G      Z:::::Z          E:::::::::::::::E     U:::::D     D:::::U
+G:::::G    GGGGG::::G     Z:::::Z           E::::::EEEEEEEEEE     U:::::D     D:::::U
+G:::::G        G::::G    Z:::::Z            E:::::E               U:::::D     D:::::U
+ G:::::G       G::::G ZZZ:::::Z     ZZZZZ   E:::::E       EEEEEE  U::::::U   U::::::U
+  G:::::GGGGGGGG::::G Z::::::ZZZZZZZZ:::Z EE::::::EEEEEEEE:::::E  U:::::::UUU:::::::U
+   GG:::::::::::::::G Z:::::::::::::::::Z E::::::::::::::::::::E   UU:::::::::::::UU
+     GGG::::::GGG:::G Z:::::::::::::::::Z E::::::::::::::::::::E     UU:::::::::UU
+        GGGGGG   GGGG ZZZZZZZZZZZZZZZZZZZ EEEEEEEEEEEEEEEEEEEEEE       UUUUUUUUU

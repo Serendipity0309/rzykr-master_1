@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzyk.departmentHead.mapper.DepartmentHeadMapper">
+    
+    <resultMap type="DepartmentHead" id="DepartmentHeadResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="userId"    column="user_id"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="position"    column="position"    />
+        <result property="jobId"    column="job_id"    />
+        <result property="guikey"    column="guikey"    />
+        <result property="codeitemdesc"    column="codeitemdesc"    />
+        <result property="type"    column="type"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="codeitemdescId"    column="codeitemdesc_id"    />
+    </resultMap>
+
+    <sql id="selectDepartmentHeadVo">
+--         select id, name, user_id, parent_id, position, job_id, guikey, codeitemdesc, type, create_by, update_by, create_time, update_time from department_head
+
+        SELECT
+            t.id,
+            NAME,
+            user_id,
+            parent_id,
+            position,
+            job_id,
+            guikey,
+            s.branch_name AS codeitemdesc,
+            type,
+            create_by,
+            update_by,
+            create_time,
+            update_time,
+            s.id codeitemdesc_id
+        FROM
+            department_head t
+                LEFT JOIN school_division s ON t.codeitemdesc = s.ID
+    </sql>
+
+    <select id="selectDepartmentHeadList" parameterType="DepartmentHead" resultMap="DepartmentHeadResult">
+        <include refid="selectDepartmentHeadVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="parentId != null  and parentId != ''"> and parent_id = #{parentId}</if>
+            <if test="position != null  and position != ''"> and position = #{position}</if>
+            <if test="jobId != null  and jobId != ''"> and job_id = #{jobId}</if>
+            <if test="guikey != null  and guikey != ''"> and guikey = #{guikey}</if>
+            <if test="codeitemdesc != null  and codeitemdesc != ''"> and codeitemdesc = #{codeitemdesc}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectDepartmentHeadById" parameterType="String" resultMap="DepartmentHeadResult">
+        <include refid="selectDepartmentHeadVo"/>
+        where t.id = #{id}
+    </select>
+        
+    <insert id="insertDepartmentHead" parameterType="DepartmentHead" useGeneratedKeys="true" keyProperty="id">
+        insert into department_head
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="position != null">position,</if>
+            <if test="jobId != null">job_id,</if>
+            <if test="guikey != null">guikey,</if>
+            <if test="codeitemdesc != null">codeitemdesc,</if>
+            <if test="type != null">type,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="position != null">1,</if>
+            <if test="jobId != null">#{jobId},</if>
+            <if test="guikey != null">#{guikey},</if>
+            <if test="codeitemdesc != null">#{codeitemdesc},</if>
+            <if test="type != null">#{type},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDepartmentHead" parameterType="DepartmentHead">
+        update department_head
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="position != null">position = #{position},</if>
+            <if test="jobId != null">job_id = #{jobId},</if>
+            <if test="guikey != null">guikey = #{guikey},</if>
+            <if test="codeitemdesc != null">codeitemdesc = #{codeitemdesc},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDepartmentHeadById" parameterType="String">
+        delete from department_head where id = #{id}
+    </delete>
+
+    <delete id="deleteDepartmentHeadByIds" parameterType="String">
+        delete from department_head where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

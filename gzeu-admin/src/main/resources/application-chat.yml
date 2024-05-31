@@ -1,0 +1,6 @@
+weichat:
+  AgentId: 1000024
+  Secret: 7RxCiiJHiTTyGsqrPauMJtSGNIGuC8WMuI5UyXlmyfM
+  CorpID: wwe7da22fd77ddf525
+  GET_USERINFO_URL: https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo
+DNS: http://kaowu.gznc.edu.cn

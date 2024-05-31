@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzyk.schoolDivision.mapper.SchoolDivisionMapper">
+
+    <resultMap type="SchoolDivision" id="SchoolDivisionResult">
+        <result property="id"    column="ID"    />
+        <result property="branchName"    column="branch_name"    />
+        <result property="branchIco"    column="branch_ico"    />
+        <result property="principal"    column="principal"    />
+        <result property="branch"    column="branch"    />
+        <result property="createdBy"    column="CREATED_BY"    />
+        <result property="createdTime"    column="CREATED_TIME"    />
+        <result property="updatedBy"    column="UPDATED_BY"    />
+        <result property="updatedTime"    column="UPDATED_TIME"    />
+    </resultMap>
+
+    <sql id="selectSchoolDivisionVo">
+        select ID, branch_name, branch_ico, principal, branch, CREATED_BY, CREATED_TIME, UPDATED_BY, UPDATED_TIME from school_division
+    </sql>
+
+    <select id="selectSchoolDivisionList" parameterType="SchoolDivision" resultMap="SchoolDivisionResult">
+        <include refid="selectSchoolDivisionVo"/>
+        <where>
+            <if test="branchName != null  and branchName != ''"> and branch_name like concat('%', #{branchName}, '%')</if>
+            <if test="branchIco != null  and branchIco != ''"> and branch_ico = #{branchIco}</if>
+            <if test="principal != null  and principal != ''"> and principal like concat('%', #{principal}, '%')</if>
+            <if test="branch != null  and branch != ''"> and branch = #{branch}</if>
+            <if test="createdBy != null  and createdBy != ''"> and CREATED_BY = #{createdBy}</if>
+            <if test="createdTime != null "> and CREATED_TIME = #{createdTime}</if>
+            <if test="updatedBy != null  and updatedBy != ''"> and UPDATED_BY = #{updatedBy}</if>
+            <if test="updatedTime != null "> and UPDATED_TIME = #{updatedTime}</if>
+        </where>
+    </select>
+
+    <select id="selectSchoolDivisionById" parameterType="Long" resultMap="SchoolDivisionResult">
+        <include refid="selectSchoolDivisionVo"/>
+        where ID = #{id}
+    </select>
+
+    <insert id="insertSchoolDivision" parameterType="SchoolDivision" useGeneratedKeys="true" keyProperty="id">
+        insert into school_division
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="branchName != null">branch_name,</if>
+            <if test="branchIco != null">branch_ico,</if>
+            <if test="principal != null">principal,</if>
+            <if test="branch != null">branch,</if>
+            <if test="createdBy != null">CREATED_BY,</if>
+            <if test="createdTime != null">CREATED_TIME,</if>
+            <if test="updatedBy != null">UPDATED_BY,</if>
+            <if test="updatedTime != null">UPDATED_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="branchName != null">#{branchName},</if>
+            <if test="branchIco != null">#{branchIco},</if>
+            <if test="principal != null">#{principal},</if>
+            <if test="branch != null">#{branch},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSchoolDivision" parameterType="SchoolDivision">
+        update school_division
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="branchName != null">branch_name = #{branchName},</if>
+            <if test="branchIco != null">branch_ico = #{branchIco},</if>
+            <if test="principal != null">principal = #{principal},</if>
+            <if test="branch != null">branch = #{branch},</if>
+            <if test="createdBy != null">CREATED_BY = #{createdBy},</if>
+            <if test="createdTime != null">CREATED_TIME = #{createdTime},</if>
+            <if test="updatedBy != null">UPDATED_BY = #{updatedBy},</if>
+            <if test="updatedTime != null">UPDATED_TIME = #{updatedTime},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+
+    <delete id="deleteSchoolDivisionById" parameterType="Long">
+        delete from school_division where ID = #{id}
+    </delete>
+
+    <delete id="deleteSchoolDivisionByIds" parameterType="String">
+        delete from school_division where ID in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

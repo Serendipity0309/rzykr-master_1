@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+		<meta charset="UTF-8" />
+
+		<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+		<script>
+			var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+				CSS.supports('top: constant(a)'))
+			document.write(
+				'<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+				(coverSupport ? ', viewport-fit=cover' : '') + '" />')
+		</script>
+
+		<script type="text/javascript">
+			window._AMapSecurityConfig = {
+				serviceHost: 'http://kaowu.gznc.edu.cn/_AMapService/',
+				// 例如 ：serviceHost:'http://1.1.1.1:80/_AMapService',
+			}
+		</script>
+		<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=c0ccad2a0c07ac86361b8f7116f5d352">
+			< script type = "text/javascript"
+			src =
+				'https://webapi.amap.com/maps?v=1.4.11&key=c0ccad2a0c07ac86361b8f7116f5d352&plugin=AMap.Geolocation,AMap.Autocomplete,AMap.PlaceSearch,AMap.Geocoder,AMap.PolyEditor' >
+		</script>
+		<script src="https://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+		</script>
+		<title></title>
+		<!--preload-links-->
+		<!--app-context-->
+	</head>
+	<body>
+		<div id="app"><!--app-html--></div>
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>

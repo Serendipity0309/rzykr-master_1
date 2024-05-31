@@ -1,0 +1,31 @@
+spring:
+  #activiti配置
+  activiti:
+    #1.flase：默认值。activiti在启动时，对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常
+    #2.true： activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建
+    #3.create_drop： 在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）
+    #4.drop-create： 在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）
+    database-schema-update: true
+    # 自动部署验证设置：true-开启（默认）、false-关闭 true时项目启动会自动部署
+    check-process-definitions: false
+    #  注意，如果activiti后面加上了/，就要求启动的时候process文件夹中需要有流程定义文件
+    #  是指定activiti流程描述文件的前缀（路径），启动时，activiti就会去寻找此路径下的流程描述文件，并且自动部署
+    process-definition-location-prefix: classpath:/processes/
+    #  suffix 是一个String数组，表示描述文件的默认后缀名，默认**.bpmn和**.bpmn20.xml
+    #    process-definition-location-suffixes:
+    #      - **.bpmn
+    #      - **.bpmn20.xml
+    #  Activiti7历史数据无法自动插入，开启下面两个配置
+    # 检测历史表是否存在  activiti7默认没有开启数据库历史记录 启动数据库历史记录
+    db-history-used: true
+    # 保存历史数据
+    #记录历史等级 可配置的历史级别有none, activity, audit, full
+    #none：不保存任何的历史数据，因此，在流程执行过程中，这是最高效的。
+    #activity：级别高于none，保存流程实例与流程行为，其他数据不保存。
+    #audit：除activity级别会保存的数据外，还会保存全部的流程任务及其属性。audit为history的默认值。
+    #full：保存历史数据的最高级别，除了会保存audit级别的数据外，还会保存其他全部流程相关的细节数据，包括一些流程参数等。
+    history-level: audit
+    # 关闭自动部署
+    deployment-mode: never-fail
+    # 解决频繁查询SQL问题
+    async-executor-activate: false

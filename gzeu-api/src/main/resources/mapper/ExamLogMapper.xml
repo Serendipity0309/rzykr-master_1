@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzyk.examLog.mapper.ExamLogMapper">
+
+    <resultMap type="ExamLog" id="ExamLogResult">
+        <result property="id" column="id"/>
+        <result property="examId" column="exam_id"/>
+        <result property="chiefinvId" column="chiefinv_id"/>
+        <result property="assistantinvId" column="assistantinv_id"/>
+        <result property="chiefinvIsGet" column="chiefinv_is_get"/>
+        <result property="assistantinvIsGet" column="assistantinv_is_get"/>
+        <result property="invigilation" column="invigilation"/>
+        <result property="lastSubmissionTime" column="last_submission_time"/>
+        <result property="submitCount" column="submit_count"/>
+        <result property="rejectTime" column="reject_time"/>
+        <result property="rejectCount" column="reject_count"/>
+        <result property="invigilateSubmitTime" column="invigilate_submit_time"/>
+        <result property="assistantinvInvigilateFetchTime" column="assistantinv_invigilate_fetch_time"/>
+        <result property="invigilatePaperStatus" column="invigilate_paper_status"/>
+        <result property="examStatus" column="exam_status"/>
+        <result property="createdBy" column="CREATED_BY"/>
+        <result property="createdTime" column="CREATED_TIME"/>
+        <result property="updatedBy" column="UPDATED_BY"/>
+        <result property="updatedTime" column="UPDATED_TIME"/>
+        <result property="chiefinvInvigilateFetchTime" column="chiefinv_invigilate_fetch_time"/>
+        <result property="chiefinvIsSubmit" column="chiefinv_is_submit"/>
+        <result property="assistantinvIsSubmit" column="assistantinv_is_submit"/>
+        <result property="materialSubmission" column="material_submission"/>
+        <result property="rejectStatus" column="reject_status"/>
+        <result property="teacherId" column="teacher_id"/>
+    </resultMap>
+
+    <sql id="selectExamLogVo">
+        SELECT id,
+               exam_id,
+               chiefinv_id,
+               assistantinv_id,
+               chiefinv_is_get,
+               assistantinv_is_get,
+               invigilation,
+               last_submission_time,
+               submit_count,
+               reject_time,
+               reject_count,
+               invigilate_submit_time,
+               assistantinv_invigilate_fetch_time,
+               invigilate_paper_status,
+               exam_status,
+               CREATED_BY,
+               CREATED_TIME,
+               UPDATED_BY,
+               UPDATED_TIME,
+               chiefinv_invigilate_fetch_time,
+               chiefinv_is_submit,
+               assistantinv_is_submit,
+               material_submission,
+               reject_status,
+               teacher_id
+        FROM exam_log
+    </sql>
+
+    <select id="selectExamLogList" parameterType="ExamLog" resultMap="ExamLogResult">
+        <include refid="selectExamLogVo"/>
+        <where>
+            <if test="examId != null  and examId != ''">and exam_id = #{examId}</if>
+            <if test="chiefinvId != null  and chiefinvId != ''">and chiefinv_id = #{chiefinvId}</if>
+            <if test="assistantinvId != null  and assistantinvId != ''">and assistantinv_id = #{assistantinvId}</if>
+            <if test="chiefinvIsGet != null  and chiefinvIsGet != ''">and chiefinv_is_get = #{chiefinvIsGet}</if>
+            <if test="assistantinvIsGet != null  and assistantinvIsGet != ''">and assistantinv_is_get =
+                #{assistantinvIsGet}
+            </if>
+            <if test="invigilation != null ">and invigilation = #{invigilation}</if>
+            <if test="lastSubmissionTime != null ">and last_submission_time = #{lastSubmissionTime}</if>
+            <if test="submitCount != null ">and submit_count = #{submitCount}</if>
+            <if test="rejectTime != null ">and reject_time = #{rejectTime}</if>
+            <if test="rejectCount != null ">and reject_count = #{rejectCount}</if>
+            <if test="invigilateSubmitTime != null ">and invigilate_submit_time = #{invigilateSubmitTime}</if>
+            <if test="assistantinvInvigilateFetchTime != null ">and assistantinv_invigilate_fetch_time =
+                #{assistantinvInvigilateFetchTime}
+            </if>
+            <if test="invigilatePaperStatus != null  and invigilatePaperStatus != ''">and invigilate_paper_status =
+                #{invigilatePaperStatus}
+            </if>
+            <if test="examStatus != null  and examStatus != ''">and exam_status = #{examStatus}</if>
+            <if test="createdBy != null  and createdBy != ''">and CREATED_BY = #{createdBy}</if>
+            <if test="createdTime != null ">and CREATED_TIME = #{createdTime}</if>
+            <if test="updatedBy != null  and updatedBy != ''">and UPDATED_BY = #{updatedBy}</if>
+            <if test="updatedTime != null ">and UPDATED_TIME = #{updatedTime}</if>
+            <if test="chiefinvInvigilateFetchTime != null ">and chiefinv_invigilate_fetch_time =
+                #{chiefinvInvigilateFetchTime}
+            </if>
+            <if test="chiefinvIsSubmit != null ">and chiefinv_is_submit = #{chiefinvIsSubmit}</if>
+            <if test="assistantinvIsSubmit != null ">and assistantinv_is_submit = #{assistantinvIsSubmit}</if>
+            <if test="materialSubmission != null ">and material_submission = #{materialSubmission}</if>
+            <if test="rejectStatus != null ">and reject_status = #{rejectStatus}</if>
+            <if test="teacherId != null ">and teacher_id = #{teacherId}</if>
+        </where>
+    </select>
+
+    <select id="selectExamLogById" parameterType="Long" resultMap="ExamLogResult">
+        <include refid="selectExamLogVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertExamLog" parameterType="ExamLog" useGeneratedKeys="true" keyProperty="id">
+        insert into exam_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="examId != null">exam_id,</if>
+            <if test="chiefinvId != null">chiefinv_id,</if>
+            <if test="assistantinvId != null">assistantinv_id,</if>
+            <if test="chiefinvIsGet != null">chiefinv_is_get,</if>
+            <if test="assistantinvIsGet != null">assistantinv_is_get,</if>
+            <if test="invigilation != null">invigilation,</if>
+            <if test="lastSubmissionTime != null">last_submission_time,</if>
+            <if test="submitCount != null">submit_count,</if>
+            <if test="rejectTime != null">reject_time,</if>
+            <if test="rejectCount != null">reject_count,</if>
+            <if test="invigilateSubmitTime != null">invigilate_submit_time,</if>
+            <if test="assistantinvInvigilateFetchTime != null">assistantinv_invigilate_fetch_time,</if>
+            <if test="invigilatePaperStatus != null">invigilate_paper_status,</if>
+            <if test="examStatus != null">exam_status,</if>
+            <if test="createdBy != null">CREATED_BY,</if>
+            <if test="createdTime != null">CREATED_TIME,</if>
+            <if test="updatedBy != null">UPDATED_BY,</if>
+            <if test="updatedTime != null">UPDATED_TIME,</if>
+            <if test="chiefinvInvigilateFetchTime != null">chiefinv_invigilate_fetch_time,</if>
+            <if test="assistantinvIsSubmit != null">assistantinv_is_submit,</if>
+            <if test="materialSubmission != null">material_submission,</if>
+            <if test="rejectStatus != null">reject_status,</if>
+            <if test="teacherId != null">teacher_id,</if>
+            <if test="chiefinvIsSubmit != null">chiefinv_is_submit,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="examId != null">#{examId},</if>
+            <if test="chiefinvId != null">#{chiefinvId},</if>
+            <if test="assistantinvId != null">#{assistantinvId},</if>
+            <if test="chiefinvIsGet != null">#{chiefinvIsGet},</if>
+            <if test="assistantinvIsGet != null">#{assistantinvIsGet},</if>
+            <if test="invigilation != null">#{invigilation},</if>
+            <if test="lastSubmissionTime != null">#{lastSubmissionTime},</if>
+            <if test="submitCount != null">#{submitCount},</if>
+            <if test="rejectTime != null">#{rejectTime},</if>
+            <if test="rejectCount != null">#{rejectCount},</if>
+            <if test="invigilateSubmitTime != null">#{invigilateSubmitTime},</if>
+            <if test="assistantinvInvigilateFetchTime != null">#{assistantinvInvigilateFetchTime},</if>
+            <if test="invigilatePaperStatus != null">#{invigilatePaperStatus},</if>
+            <if test="examStatus != null">#{examStatus},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+            <if test="chiefinvInvigilateFetchTime != null">#{chiefinvInvigilateFetchTime},</if>
+            <if test="assistantinvIsSubmit != null">#{assistantinvIsSubmit},</if>
+            <if test="materialSubmission != null">#{materialSubmission},</if>
+            <if test="rejectStatus != null">#{rejectStatus},</if>
+            <if test="teacherId != null">#{teacherId},</if>
+            <if test="chiefinvIsSubmit != null">#{chiefinvIsSubmit},</if>
+        </trim>
+    </insert>
+
+    <update id="updateExamLog" parameterType="ExamLog">
+        update exam_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="examId != null">exam_id = #{examId},</if>
+            <if test="chiefinvId != null">chiefinv_id = #{chiefinvId},</if>
+            <if test="assistantinvId != null">assistantinv_id = #{assistantinvId},</if>
+            <if test="chiefinvIsGet != null">chiefinv_is_get = #{chiefinvIsGet},</if>
+            <if test="assistantinvIsGet != null">assistantinv_is_get = #{assistantinvIsGet},</if>
+            <if test="invigilation != null">invigilation = #{invigilation},</if>
+            <if test="lastSubmissionTime != null">last_submission_time = #{lastSubmissionTime},</if>
+            <if test="submitCount != null">submit_count = #{submitCount},</if>
+            <if test="rejectTime != null">reject_time = #{rejectTime},</if>
+            <if test="rejectCount != null">reject_count = #{rejectCount},</if>
+            <if test="invigilateSubmitTime != null">invigilate_submit_time = #{invigilateSubmitTime},</if>
+            <if test="assistantinvInvigilateFetchTime != null">assistantinv_invigilate_fetch_time =
+                #{assistantinvInvigilateFetchTime},
+            </if>
+            <if test="invigilatePaperStatus != null">invigilate_paper_status = #{invigilatePaperStatus},</if>
+            <if test="examStatus != null">exam_status = #{examStatus},</if>
+            <if test="createdBy != null">CREATED_BY = #{createdBy},</if>
+            <if test="createdTime != null">CREATED_TIME = #{createdTime},</if>
+            <if test="updatedBy != null">UPDATED_BY = #{updatedBy},</if>
+            <if test="updatedTime != null">UPDATED_TIME = #{updatedTime},</if>
+            <if test="chiefinvInvigilateFetchTime != null">chiefinv_invigilate_fetch_time =
+                #{chiefinvInvigilateFetchTime},
+            </if>
+            <if test="assistantinvIsSubmit != null">assistantinv_is_submit = #{assistantinvIsSubmit},</if>
+            <if test="materialSubmission != null">material_submission = #{materialSubmission},</if>
+            <if test="rejectStatus != null">reject_status = #{rejectStatus},</if>
+            <if test="teacherId != null">teacher_id = #{teacherId},</if>
+            <if test="chiefinvIsSubmit != null">chiefinv_is_submit = #{chiefinvIsSubmit},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteExamLogById" parameterType="Long">
+        delete
+        from exam_log
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteExamLogByIds" parameterType="String">
+        delete from exam_log where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectExamLogByExamId" resultMap="ExamLogResult">
+        <include refid="selectExamLogVo"/>
+        where exam_id=#{id}
+    </select>
+    <select id="selectExamlogForCountInvigilateAscLimit" resultType="com.google.gson.internal.LinkedTreeMap">
+      <![CDATA[
+        SELECT t3.user_id,
+               IF(t4.name IS NOT NULL, t4.name, "未知") as name,
+               SUM(t3.total)                          AS total
+        FROM (
+                 SELECT assistantinv_id AS user_id,
+                        count(*)        AS total
+                 FROM exam_log
+                 GROUP BY assistantinv_id
+                 UNION ALL
+                 SELECT chiefinv_id AS user_id,
+                        count(*)    AS total
+                 FROM exam_log
+                 GROUP BY chiefinv_id
+             ) AS t3
+                 LEFT JOIN teacher_info t4 ON t3.user_id = t4.id
+
+        GROUP BY t3.user_id
+        ORDER BY total ASC LIMIT 0,#{par}
+        ]]>
+    </select>
+    <select id="selectExamlogForCountInvigilateDescLimit" resultType="java.util.LinkedHashMap">
+<![CDATA[
+        SELECT t3.user_id,
+               IF(t4.name IS NOT NULL, t4.name, "未知") as name,
+               SUM(t3.total)                          AS total
+        FROM (
+                 SELECT assistantinv_id AS user_id,
+                        count(*)        AS total
+                 FROM exam_log
+                 GROUP BY assistantinv_id
+                 UNION ALL
+                 SELECT chiefinv_id AS user_id,
+                        count(*)    AS total
+                 FROM exam_log
+                 GROUP BY chiefinv_id
+             ) AS t3
+                 LEFT JOIN teacher_info t4 ON t3.user_id = t4.id
+
+        GROUP BY t3.user_id
+        ORDER BY total DESC LIMIT 0,#{par}
+        ]]>
+    </select>
+    <select id="selectExamlogRejectAscLimit" resultType="java.util.LinkedHashMap">
+        SELECT
+            IF
+                ( teacher_id IS NOT NULL, teacher_id, "未知" ) AS teacher_id ,ti.`name` ,SUM(reject_count) as total
+        FROM
+            exam_log el
+                LEFT JOIN teacher_info ti
+                          ON el.teacher_id=ti.id
+        GROUP BY
+            teacher_id
+
+        ORDER BY total asc
+
+            LIMIT 0,#{par}
+    </select>
+    <select id="selectExamlogRejectDescLimit" resultType="java.util.LinkedHashMap">
+        SELECT
+            IF
+                ( teacher_id IS NOT NULL, teacher_id, "未知" ) AS teacher_id ,ti.`name` ,SUM(reject_count) as total
+        FROM
+            exam_log el
+                LEFT JOIN teacher_info ti
+                          ON el.teacher_id=ti.id
+        GROUP BY
+            teacher_id
+
+        ORDER BY total DESC
+
+            LIMIT 0,#{par}
+    </select>
+    <select id="selectExamLogListDocument" resultType="java.util.Map">
+        SELECT * FROM reject_document
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from  exam_log
+    </select>
+    <select id="countTeacher" resultType="java.lang.Integer">
+
+select count(*) from teacher_info
+    </select>
+
+
+    <insert id="addReasonLog">
+    insert reject_document values (null,#{reason},now(),#{id})
+    </insert>
+
+</mapper>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzyk.TExamData.mapper.TExamDataMapper">
+
+    <resultMap type="com.rzyk.TExamData.domain.TExamData" id="TExamDataResult">
+        <result property="id" column="id"/>
+        <result property="coursenumber" column="courseNumber"/>
+        <result property="coursename" column="courseName"/>
+        <result property="teacher" column="teacher"/>
+        <result property="teachingclass" column="teachingClass"/>
+        <result property="studentclass" column="studentClass"/>
+        <result property="num" column="num"/>
+        <result property="place" column="place"/>
+        <result property="totalnum" column="totalNum"/>
+        <result property="examtime" column="examTime"/>
+        <result property="examdate" column="examDate"/>
+        <result property="examiners" column="examiners"/>
+        <result property="chiefinv" column="chiefInv"/>
+        <result property="assistantinv" column="assistantInv"/>
+        <result property="papersnum" column="papersNum"/>
+        <result property="classescampus" column="classesCampus"/>
+        <result property="examcampus" column="examCampus"/>
+        <result property="classessdept" column="classesSdept"/>
+        <result property="toteachsdept" column="toTeachSdept"/>
+        <result property="campus" column="campus"/>
+        <result property="capacity" column="capacity"/>
+        <result property="examsection" column="examSection"/>
+        <result property="college" column="college"/>
+        <result property="semester" column="semester"/>
+        <result property="uploaddate" column="uploadDate"/>
+        <result property="groupname" column="groupName"/>
+        <result property="printnum" column="printNum"/>
+        <result property="batch" column="batch"/>
+        <result property="status" column="status"/>
+        <result property="createTime" column="create_time"/>
+
+    </resultMap>
+
+    <sql id="selectTExamDataVo">
+        select id,
+               courseNumber,
+               courseName,
+               teacher,
+               teachingClass,
+               studentClass,
+               num,
+               place,
+               totalNum,
+               examTime,
+               examDate,
+               examiners,
+               chiefInv,
+               assistantInv,
+               papersNum,
+               classesCampus,
+               examCampus,
+               classesSdept,
+               toTeachSdept,
+               campus,
+               capacity,
+               examSection,
+               college,
+               semester,
+               uploadDate,
+               groupName,
+               printNum,
+               batch,
+               status,
+               create_time
+        from t_exam_data
+    </sql>
+
+    <select id="selectTExamDataList" parameterType="com.rzyk.TExamData.domain.TExamData" resultMap="TExamDataResult">
+        <include refid="selectTExamDataVo"/>
+
+        <where>
+            <if test="coursenumber != null  and coursenumber != ''">and courseNumber = #{coursenumber}</if>
+            <if test="coursename != null  and coursename != ''">and courseName like concat('%', #{coursename}, '%')</if>
+            <if test="teacher != null  and teacher != ''">and teacher = #{teacher}</if>
+            <if test="teachingclass != null  and teachingclass != ''">and teachingClass = #{teachingclass}</if>
+            <if test="studentclass != null  and studentclass != ''">and studentClass = #{studentclass}</if>
+            <if test="num != null ">and num = #{num}</if>
+            <if test="place != null  and place != ''">and place = #{place}</if>
+            <if test="totalnum != null ">and totalNum = #{totalnum}</if>
+            <if test="examtime != null  and examtime != ''">and examTime = #{examtime}</if>
+            <if test="examdate != null  and examdate != ''">and examDate = #{examdate}</if>
+            <if test="examiners != null  and examiners != ''">and examiners = #{examiners}</if>
+            <if test="chiefinv != null  and chiefinv != ''">and chiefInv = #{chiefinv}</if>
+            <if test="assistantinv != null  and assistantinv != ''">and assistantInv = #{assistantinv}</if>
+            <if test="papersnum != null  and papersnum != ''">and papersNum = #{papersnum}</if>
+            <if test="classescampus != null  and classescampus != ''">and classesCampus = #{classescampus}</if>
+            <if test="examcampus != null  and examcampus != ''">and examCampus = #{examcampus}</if>
+            <if test="classessdept != null  and classessdept != ''">and classesSdept = #{classessdept}</if>
+            <if test="toteachsdept != null  and toteachsdept != ''">and toTeachSdept = #{toteachsdept}</if>
+            <if test="campus != null  and campus != ''">and campus = #{campus}</if>
+            <if test="capacity != null ">and capacity = #{capacity}</if>
+            <if test="examsection != null  and examsection != ''">and examSection = #{examsection}</if>
+            <if test="college != null  and college != ''">and college = #{college}</if>
+            <if test="semester != null  and semester != ''">and semester = #{semester}</if>
+            <if test="uploaddate != null ">and uploadDate = #{uploaddate}</if>
+            <if test="groupname != null  and groupname != ''">and groupName like concat('%', #{groupname}, '%')</if>
+            <if test="printnum != null  and printnum != ''">and printNum = #{printnum}</if>
+            <if test="batch != null ">and batch = #{batch}</if>
+            <if test="status != null ">and status = #{status}</if>
+            <if test="createTime != null ">and create_time = #{createTime}</if>
+        </where>
+        order by uploadDate desc
+    </select>
+
+    <select id="selectTExamDataById" parameterType="Long" resultMap="TExamDataResult">
+        <include refid="selectTExamDataVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectTExamDataByIds" resultType="com.rzyk.TExamData.domain.TExamData" parameterType="list">
+        <include refid="selectTExamDataVo"/>
+        where
+        id in
+        <foreach collection="ids" separator="," open="(" close=")" item="item">#{item}</foreach>
+    </select>
+    <select id="selectTExamDataListByKeyword" resultType="com.rzyk.TExamData.domain.TExamData">
+     select t1.*from (   <include refid="selectTExamDataVo"/>
+
+        <where>
+            <if test="keyword != null  and keyword != ''">
+            or courseNumber like concat('%', #{keyword}, '%')
+            or coursename like concat('%', #{keyword}, '%')
+            or teacher like concat('%', #{keyword}, '%')
+            or teachingclass like concat('%', #{keyword}, '%')
+            or studentclass like concat('%', #{keyword}, '%')
+            or place like concat('%', #{keyword}, '%')
+
+            or examiners like concat('%', #{keyword}, '%')
+            or chiefinv like concat('%', #{keyword}, '%')
+            or assistantinv like concat('%', #{keyword}, '%')
+            or papersnum like concat('%', #{keyword}, '%')
+            or classescampus like concat('%', #{keyword}, '%')
+            or examcampus like concat('%', #{keyword}, '%')
+            or classessdept like concat('%', #{keyword}, '%')
+            or toteachsdept like concat('%', #{keyword}, '%')
+            or campus like concat('%', #{keyword}, '%')
+            or capacity like concat('%', #{keyword}, '%')
+            or examsection like concat('%', #{keyword}, '%')
+            or college like concat('%', #{keyword}, '%')
+            or semester like concat('%', #{keyword}, '%')
+            or groupname like concat('%', #{keyword}, '%')
+           or batch like concat('%', #{keyword}, '%')
+           </if>
+        </where>
+        ) t1
+        <where>
+        <if test="date != null  and date != ''">
+            t1.examDate = #{date}
+        </if>
+        </where>
+   order by uploadDate desc
+    </select>
+
+    <insert id="insertTExamData" parameterType="com.rzyk.TExamData.domain.TExamData" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into t_exam_data
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coursenumber != null">courseNumber,</if>
+            <if test="coursename != null">courseName,</if>
+            <if test="teacher != null">teacher,</if>
+            <if test="teachingclass != null">teachingClass,</if>
+            <if test="studentclass != null">studentClass,</if>
+            <if test="num != null">num,</if>
+            <if test="place != null">place,</if>
+            <if test="totalnum != null">totalNum,</if>
+            <if test="examtime != null">examTime,</if>
+            <if test="examdate != null">examDate,</if>
+            <if test="examiners != null">examiners,</if>
+            <if test="chiefinv != null">chiefInv,</if>
+            <if test="assistantinv != null">assistantInv,</if>
+            <if test="papersnum != null">papersNum,</if>
+            <if test="classescampus != null">classesCampus,</if>
+            <if test="examcampus != null">examCampus,</if>
+            <if test="classessdept != null">classesSdept,</if>
+            <if test="toteachsdept != null">toTeachSdept,</if>
+            <if test="campus != null">campus,</if>
+            <if test="capacity != null">capacity,</if>
+            <if test="examsection != null">examSection,</if>
+            <if test="college != null">college,</if>
+            <if test="semester != null">semester,</if>
+            <if test="uploaddate != null">uploadDate,</if>
+            <if test="groupname != null">groupName,</if>
+            <if test="printnum != null">printNum,</if>
+            <if test="batch != null">batch,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coursenumber != null">#{coursenumber},</if>
+            <if test="coursename != null">#{coursename},</if>
+            <if test="teacher != null">#{teacher},</if>
+            <if test="teachingclass != null">#{teachingclass},</if>
+            <if test="studentclass != null">#{studentclass},</if>
+            <if test="num != null">#{num},</if>
+            <if test="place != null">#{place},</if>
+            <if test="totalnum != null">#{totalnum},</if>
+            <if test="examtime != null">#{examtime},</if>
+            <if test="examdate != null">#{examdate},</if>
+            <if test="examiners != null">#{examiners},</if>
+            <if test="chiefinv != null">#{chiefinv},</if>
+            <if test="assistantinv != null">#{assistantinv},</if>
+            <if test="papersnum != null">#{papersnum},</if>
+            <if test="classescampus != null">#{classescampus},</if>
+            <if test="examcampus != null">#{examcampus},</if>
+            <if test="classessdept != null">#{classessdept},</if>
+            <if test="toteachsdept != null">#{toteachsdept},</if>
+            <if test="campus != null">#{campus},</if>
+            <if test="capacity != null">#{capacity},</if>
+            <if test="examsection != null">#{examsection},</if>
+            <if test="college != null">#{college},</if>
+            <if test="semester != null">#{semester},</if>
+            <if test="uploaddate != null">#{uploaddate},</if>
+            <if test="groupname != null">#{groupname},</if>
+            <if test="printnum != null">#{printnum},</if>
+            <if test="batch != null">#{batch},</if>
+            <if test="status != null">#{status},</if>
+            <if test=" createTime != null">#{create_time},</if>
+        </trim>
+    </insert>
+
+    <update id="updateTExamData" parameterType="com.rzyk.TExamData.domain.TExamData">
+        update t_exam_data
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="coursenumber != null">courseNumber = #{coursenumber},</if>
+            <if test="coursename != null">courseName = #{coursename},</if>
+            <if test="teacher != null">teacher = #{teacher},</if>
+            <if test="teachingclass != null">teachingClass = #{teachingclass},</if>
+            <if test="studentclass != null">studentClass = #{studentclass},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="place != null">place = #{place},</if>
+            <if test="totalnum != null">totalNum = #{totalnum},</if>
+            <if test="examtime != null">examTime = #{examtime},</if>
+            <if test="examdate != null">examDate = #{examdate},</if>
+            <if test="examiners != null">examiners = #{examiners},</if>
+            <if test="chiefinv != null">chiefInv = #{chiefinv},</if>
+            <if test="assistantinv != null">assistantInv = #{assistantinv},</if>
+            <if test="papersnum != null">papersNum = #{papersnum},</if>
+            <if test="classescampus != null">classesCampus = #{classescampus},</if>
+            <if test="examcampus != null">examCampus = #{examcampus},</if>
+            <if test="classessdept != null">classesSdept = #{classessdept},</if>
+            <if test="toteachsdept != null">toTeachSdept = #{toteachsdept},</if>
+            <if test="campus != null">campus = #{campus},</if>
+            <if test="capacity != null">capacity = #{capacity},</if>
+            <if test="examsection != null">examSection = #{examsection},</if>
+            <if test="college != null">college = #{college},</if>
+            <if test="semester != null">semester = #{semester},</if>
+            <if test="uploaddate != null">uploadDate = #{uploaddate},</if>
+            <if test="groupname != null">groupName = #{groupname},</if>
+            <if test="printnum != null">printNum = #{printnum},</if>
+            <if test="batch != null">batch = #{batch},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="exchangeExamPlace">
+        select place,totalNum INTO @oringePlace,@oringeTotalNum from t_exam_data where id=#{oringeId};
+        select place,totalNum INTO @exchangePlace,@exchangeTotalNum from t_exam_data where id=#{exchangeId};
+        update t_exam_data set place = @oringePlace,totalNum =@oringeTotalNum where id=#{exchangeId};
+        update t_exam_data set place = @exchangePlace,totalNum =@exchangeTotalNum where id=#{oringeId};
+    </update>
+
+    <delete id="deleteTExamDataById" parameterType="Long">
+        delete
+        from t_exam_data
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteTExamDataByIds" parameterType="String">
+        delete from t_exam_data where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectTableField" resultType="map">
+        select COLUMN_NAME,DATA_TYPE,COLUMN_COMMENT from information_schema.COLUMNS
+        where table_name = 't_exam_data' and table_schema = 'rzyk' and COLUMN_NAME !='id' and COLUMN_NAME !='create_time'
+    </select>
+    <select id="getExamDataGroupByDate" resultMap="TExamDataResult">
+        <include refid="selectTExamDataVo"/>
+        where
+        (
+        examDate LIKE CONCAT( #{dateCurr}, "-", "%" )
+        AND chiefInv LIKE CONCAT( #{name}, "(", "%" )
+        OR assistantInv LIKE CONCAT( #{name}, "(", "%" ))
+        OR (
+        examDate LIKE CONCAT( #{dateNext}, "-", "%" )
+        AND
+        chiefInv LIKE CONCAT( #{name}, "(", "%" )
+        OR assistantInv LIKE CONCAT( #{name}, "(", "%" )
+        )ORDER BY examDate asc
+    </select>
+    <select id="getSyncPlace" resultType="java.util.Map">
+        <![CDATA[
+        SELECT
+            examTime,examDate,num INTO @examTime_data,@examDate_data,@num
+        FROM
+            t_exam_data
+        WHERE
+            id = #{id};
+        SELECT
+            place as `value`,totalNum,id
+        FROM
+            t_exam_data
+        WHERE
+            examTime = @examTime_data AND examDate = @examDate_data AND totalNum>=@num
+        ]]>
+            </select>
+    <select id="getAllteacher" resultType="java.util.Map">
+ select DISTINCT  t1.name as `value` from(
+            SELECT `chiefInv` AS `name`
+            FROM `t_exam_data`
+            UNION
+            SELECT `assistantInv` AS `name`
+            FROM `t_exam_data` ) t1
+    </select>
+</mapper>

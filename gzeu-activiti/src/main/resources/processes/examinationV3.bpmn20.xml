@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="examinationV3" name="examinationV3" isExecutable="true">
+    <userTask id="invigilator_get_exam" name="监考老师领卷">
+      <documentation>监考老师领卷</documentation>
+    </userTask>
+    <userTask id="invigilator_hand_exam" name="监考老师交卷">
+      <documentation>监考老师交卷</documentation>
+    </userTask>
+    <userTask id="teacher_get_exam" name="授课老师领卷">
+      <documentation>授课老师领卷</documentation>
+    </userTask>
+    <userTask id="teacher_hand_exam" name="授课老师交卷">
+      <documentation>授课老师交卷</documentation>
+    </userTask>
+    <userTask id="supervisory_approval" name="督导审批">
+      <documentation>督导审批</documentation>
+    </userTask>
+    <sequenceFlow id="starter_line" sourceRef="starter" targetRef="invigilator_get_exam"/>
+    <sequenceFlow id="line_invigilator_get_exam" sourceRef="invigilator_get_exam" targetRef="invigilator_hand_exam"/>
+    <sequenceFlow id="line_teacher_hand_exam" sourceRef="teacher_hand_exam" targetRef="supervisory_approval"/>
+    <sequenceFlow id="reject_line_supervisory_approval" sourceRef="supervisory_approval" targetRef="teacher_hand_exam" name="驳回">
+      <conditionExpression>${isPass==0}</conditionExpression>
+    </sequenceFlow>
+    <startEvent id="starter" name="开始流程">
+      <documentation>开始流程</documentation>
+    </startEvent>
+    <endEvent id="end" name="结束流程">
+      <documentation>结束流程</documentation>
+    </endEvent>
+    <sequenceFlow id="line_supervisory_approval" sourceRef="supervisory_approval" targetRef="end" name="通过">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="line_starter" sourceRef="starter" targetRef="invigilator_get_exam"/>
+    <sequenceFlow id="line_teacher_get_exam" sourceRef="teacher_get_exam" targetRef="teacher_hand_exam"/>
+    <sequenceFlow id="line_invigilator_hand_exam" sourceRef="invigilator_hand_exam" targetRef="teacher_get_exam"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_examinationV3">
+    <bpmndi:BPMNPlane bpmnElement="examinationV3" id="BPMNPlane_examinationV3">
+      <bpmndi:BPMNShape id="shape-d89d7229-8447-43d9-8c1d-5656f6ae50f2" bpmnElement="starter">
+        <omgdc:Bounds x="-315.0" y="20.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-4148478d-1e0a-434d-b53b-2d4b3b33d35e" bpmnElement="invigilator_get_exam">
+        <omgdc:Bounds x="-255.0" y="-3.8244877" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-2e70e2fc-8997-43de-9d8b-453a41478f02" bpmnElement="invigilator_hand_exam">
+        <omgdc:Bounds x="-120.0" y="-5.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-b468d09c-2c55-43c1-94c0-b3064dd9d63d" bpmnElement="teacher_get_exam">
+        <omgdc:Bounds x="20.0" y="-5.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-c31f71f1-d6fd-4856-8bb4-a89264ca8db6" bpmnElement="teacher_hand_exam">
+        <omgdc:Bounds x="165.0" y="-5.000004" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-6e1c7ad1-541b-43a4-b177-f02ad894a954" bpmnElement="supervisory_approval">
+        <omgdc:Bounds x="295.0" y="-5.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-3e985d86-1f1a-49ec-ae80-2d68cddde112" bpmnElement="line_invigilator_get_exam">
+        <omgdi:waypoint x="-155.0" y="36.175514"/>
+        <omgdi:waypoint x="-120.0" y="35.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-3c818ac0-a90f-483d-955f-0c733eea2e9b" bpmnElement="line_teacher_get_exam">
+        <omgdi:waypoint x="-20.0" y="35.0"/>
+        <omgdi:waypoint x="20.0" y="34.999996"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-1436c808-958b-4d5b-bdb0-57275a1b42b9" bpmnElement="line_invigilator_hand_exam">
+        <omgdi:waypoint x="120.0" y="35.0"/>
+        <omgdi:waypoint x="165.0" y="35.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-b42358c2-62f8-40b1-8742-4e45ec0d72db" bpmnElement="line_teacher_hand_exam">
+        <omgdi:waypoint x="265.0" y="34.999996"/>
+        <omgdi:waypoint x="295.0" y="35.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-1157d29d-5a56-4177-b395-c8b6e77e8f57" bpmnElement="reject_line_supervisory_approval">
+        <omgdi:waypoint x="345.0" y="-5.0"/>
+        <omgdi:waypoint x="344.99997" y="-47.5"/>
+        <omgdi:waypoint x="215.0" y="-47.5"/>
+        <omgdi:waypoint x="215.0" y="-5.000004"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-15401d89-fe14-4cbd-bea6-59325deb6a56" bpmnElement="starter">
+        <omgdc:Bounds x="-315.0" y="20.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-51c85124-bdad-4d98-98ed-a278351de2b7" bpmnElement="end">
+        <omgdc:Bounds x="445.0" y="19.999996" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-760e0204-434c-4fc6-a46a-e54cf5276309" bpmnElement="line_supervisory_approval">
+        <omgdi:waypoint x="395.0" y="35.0"/>
+        <omgdi:waypoint x="445.0" y="35.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-4f009713-8131-4576-bec5-890483a3584b" bpmnElement="starter">
+        <omgdc:Bounds x="-335.0" y="21.175514" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-5cf8f35b-a357-4d5f-bd9e-6e5cc15f98af" bpmnElement="line_starter">
+        <omgdi:waypoint x="-305.0" y="36.175514"/>
+        <omgdi:waypoint x="-255.0" y="36.175514"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-6ec46a6a-d0bf-47fc-a044-cf564bc4e36f" bpmnElement="line_teacher_get_exam">
+        <omgdi:waypoint x="119.99999" y="35.0"/>
+        <omgdi:waypoint x="164.99997" y="35.89174"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-8d2bc3c2-30c5-4e0b-980e-d995858dedaa" bpmnElement="line_invigilator_hand_exam">
+        <omgdi:waypoint x="-20.000002" y="35.0"/>
+        <omgdi:waypoint x="20.000002" y="35.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

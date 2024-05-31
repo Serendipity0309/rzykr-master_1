@@ -1,0 +1,4 @@
+{
+	"NODE_ENV":"development",
+	"base_url":"http://192.168.214.102:8080"
+}

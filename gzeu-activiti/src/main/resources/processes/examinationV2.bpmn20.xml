@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="examination" name="试卷审批流程V2" isExecutable="true">
+    <startEvent id="_1" name="开始流程"/>
+    <userTask id="_2" name="监考老师领卷" activiti:assignee="${Assignee01}"/>
+    <userTask id="_3" name="监考老师交卷" activiti:assignee="${Assignee02}"/>
+    <sequenceFlow id="sid-50c67539-683d-46fc-b27e-64dcdb0917a5" sourceRef="_1" targetRef="_2"/>
+    <sequenceFlow id="sid-8e5aa2e0-5b29-465c-b0fd-549065cb0621" sourceRef="_2" targetRef="_3" name="通过">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="_4" name="授课老师领卷" activiti:assignee="${Assignee03}"/>
+    <userTask id="_5" name="授课老师交卷" activiti:assignee="${Assignee05}"/>
+    <sequenceFlow id="sid-0d098b74-4602-43fe-8b88-55fee87ede68" sourceRef="_3" targetRef="_4" name="通过">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-44ff277e-dc0f-4e18-9b4c-f0f329fc20f2" sourceRef="_6" targetRef="_5" name="驳回">
+      <conditionExpression>${isPass==0}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-72e80fcd-70ba-4a28-9878-4bf5ba50e391" sourceRef="_5" targetRef="_6" name="通过">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-1d81d34d-26dd-4128-a0d9-10f2a254e7a4" sourceRef="_4" targetRef="_5" name="通过">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+    <userTask id="_6" name="督导审批" activiti:assignee="${Assignee04}"/>
+    <endEvent id="_7" name="结束流程"/>
+    <sequenceFlow id="sid-423de6f3-b50d-43e2-a82d-0e57414fadec" sourceRef="_6" targetRef="_7">
+      <conditionExpression>${isPass==1}</conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_examinationV2">
+    <bpmndi:BPMNPlane bpmnElement="examinationV2" id="BPMNPlane_examinationV2">
+      <bpmndi:BPMNShape id="shape-4d042594-df2b-478d-822d-8ac7b9cc8d90" bpmnElement="_1">
+        <omgdc:Bounds x="-60.0" y="-130.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-76c7a7f9-e762-4c42-8d97-8db0816f0fe7" bpmnElement="_2">
+        <omgdc:Bounds x="-95.0" y="-55.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-719eba99-4b7f-4c62-9d14-4c90cc9fa974" bpmnElement="_3">
+        <omgdc:Bounds x="-94.26689" y="95.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-4c5756bb-bc60-4eb3-a593-e43dc01a5eb9" bpmnElement="sid-50c67539-683d-46fc-b27e-64dcdb0917a5">
+        <omgdi:waypoint x="-45.0" y="-100.0"/>
+        <omgdi:waypoint x="-45.0" y="-55.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-486c70b6-e769-42cf-bbc6-18af05f4e86c" bpmnElement="sid-8e5aa2e0-5b29-465c-b0fd-549065cb0621">
+        <omgdi:waypoint x="-45.0" y="25.0"/>
+        <omgdi:waypoint x="-44.26689" y="95.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="shape-d8a5f7a7-3ba8-4bc2-bd58-e4249030c3f1" bpmnElement="_4">
+        <omgdc:Bounds x="-94.26689" y="215.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-a0e970b9-f873-4583-86cc-e5d4deec617d" bpmnElement="_5">
+        <omgdc:Bounds x="-94.26689" y="355.0" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-3557c5cf-6f18-48aa-9080-4b874076c2c3" bpmnElement="sid-0d098b74-4602-43fe-8b88-55fee87ede68">
+        <omgdi:waypoint x="-44.26689" y="175.0"/>
+        <omgdi:waypoint x="-44.26689" y="215.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-40d6a140-acad-482a-a47d-b40d29ea9183" bpmnElement="sid-44ff277e-dc0f-4e18-9b4c-f0f329fc20f2">
+        <omgdi:waypoint x="-95.0" y="537.2865"/>
+        <omgdi:waypoint x="-157.50002" y="537.28644"/>
+        <omgdi:waypoint x="-157.50002" y="395.0"/>
+        <omgdi:waypoint x="-94.26689" y="395.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-38115b7c-f16d-412a-9640-fccc1b624dc6" bpmnElement="sid-72e80fcd-70ba-4a28-9878-4bf5ba50e391">
+        <omgdi:waypoint x="-44.26689" y="435.0"/>
+        <omgdi:waypoint x="-45.0" y="497.28647"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-6bf025f9-be2c-4517-b549-5effc2afb886" bpmnElement="sid-1d81d34d-26dd-4128-a0d9-10f2a254e7a4">
+        <omgdi:waypoint x="-44.26689" y="295.0"/>
+        <omgdi:waypoint x="-44.26689" y="355.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="sid-49ff455b-e0d4-451d-a647-e7b81b387d8e" bpmnElement="_6">
+        <omgdc:Bounds x="-95.0" y="497.2865" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-0c8a1fa9-0afc-49c0-97a0-0e024f058963" bpmnElement="_7">
+        <omgdc:Bounds x="-60.0" y="620.0" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-d4bbf643-eaa1-4b91-9872-84c209808bf0" bpmnElement="sid-423de6f3-b50d-43e2-a82d-0e57414fadec">
+        <omgdi:waypoint x="-45.0" y="577.2865"/>
+        <omgdi:waypoint x="-45.0" y="620.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

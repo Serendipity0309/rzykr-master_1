@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzyk.Supervisor.mapper.SupervisorMapper">
+    
+    <resultMap type="Supervisor" id="SupervisorResult">
+        <result property="id"    column="id"    />
+        <result property="paperNumber"    column="paper_number"    />
+        <result property="status"    column="status"    />
+        <result property="role"    column="role"    />
+        <result property="activeIndex"    column="active_index"    />
+        <result property="currentSubmitterName"    column="current_submitter_name"    />
+        <result property="submitterUserId"    column="submitter_user_id"    />
+        <result property="weichatId"    column="weichat_id"    />
+        <result property="createdBy"    column="CREATED_BY"    />
+        <result property="createdTime"    column="CREATED_TIME"    />
+        <result property="updatedBy"    column="UPDATED_BY"    />
+        <result property="updatedTime"    column="UPDATED_TIME"    />
+    </resultMap>
+
+    <sql id="selectSupervisorVo">
+--         select id, paper_number, status, role,active_index,current_submitter_name, submitter_user_id, weichat_id, CREATED_BY, CREATED_TIME, UPDATED_BY, UPDATED_TIME from supervisor
+SELECT
+    t.id,
+    NAME,
+    user_id,
+    parent_id,
+    position,
+    job_id,
+    guikey,
+    s.branch_name AS codeitemdesc,
+    type,
+    create_by,
+    update_by,
+    create_time,
+    update_time,
+    s.id s_id
+FROM
+    supervisor t
+        LEFT JOIN school_division s ON t.codeitemdesc = s.ID
+   </sql>
+
+    <select id="selectSupervisorList" parameterType="Supervisor" resultMap="SupervisorResult">
+        <include refid="selectSupervisorVo"/>
+        <where>  
+            <if test="paperNumber != null  and paperNumber != ''"> and paper_number = #{paperNumber}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="role != null  and role != ''"> and role = #{role}</if>
+            <if test="activeIndex != null  and activeIndex != ''"> and active_index = #{activeIndex}</if>
+            <if test="currentSubmitterName != null  and currentSubmitterName != ''"> and current_submitter_name like concat('%', #{currentSubmitterName}, '%')</if>
+            <if test="submitterUserId != null  and submitterUserId != ''"> and submitter_user_id = #{submitterUserId}</if>
+            <if test="weichatId != null  and weichatId != ''"> and weichat_id = #{weichatId}</if>
+            <if test="createdBy != null  and createdBy != ''"> and CREATED_BY = #{createdBy}</if>
+            <if test="createdTime != null "> and CREATED_TIME = #{createdTime}</if>
+            <if test="updatedBy != null  and updatedBy != ''"> and UPDATED_BY = #{updatedBy}</if>
+            <if test="updatedTime != null "> and UPDATED_TIME = #{updatedTime}</if>
+        </where>
+        ORDER BY  active_index DESC
+    </select>
+    
+    <select id="selectSupervisorById" parameterType="Long" resultMap="SupervisorResult">
+        <include refid="selectSupervisorVo"/>
+        where t.id = #{id}
+    </select>
+        
+    <insert id="insertSupervisor" parameterType="Supervisor" useGeneratedKeys="true" keyProperty="id">
+        insert into supervisor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="paperNumber != null">paper_number,</if>
+            <if test="status != null">status,</if>
+            <if test="role != null">role,</if>
+            <if test="activeIndex != null">active_index,</if>
+            <if test="currentSubmitterName != null">current_submitter_name,</if>
+            <if test="submitterUserId != null">submitter_user_id,</if>
+            <if test="weichatId != null">weichat_id,</if>
+            <if test="createdBy != null">CREATED_BY,</if>
+            <if test="createdTime != null">CREATED_TIME,</if>
+            <if test="updatedBy != null">UPDATED_BY,</if>
+            <if test="updatedTime != null">UPDATED_TIME,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="paperNumber != null">#{paperNumber},</if>
+            <if test="status != null">#{status},</if>
+            <if test="role != null">#{role},</if>
+            <if test="activeIndex != null">#{activeIndex},</if>
+            <if test="currentSubmitterName != null">#{currentSubmitterName},</if>
+            <if test="submitterUserId != null">#{submitterUserId},</if>
+            <if test="weichatId != null">#{weichatId},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSupervisor" parameterType="Supervisor">
+        update supervisor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="paperNumber != null">paper_number = #{paperNumber},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="role != null">role = #{role},</if>
+            <if test="activeIndex != null">active_index = #{activeIndex},</if>
+            <if test="currentSubmitterName != null">current_submitter_name = #{currentSubmitterName},</if>
+            <if test="submitterUserId != null">submitter_user_id = #{submitterUserId},</if>
+            <if test="weichatId != null">weichat_id = #{weichatId},</if>
+            <if test="createdBy != null">CREATED_BY = #{createdBy},</if>
+            <if test="createdTime != null">CREATED_TIME = #{createdTime},</if>
+            <if test="updatedBy != null">UPDATED_BY = #{updatedBy},</if>
+            <if test="updatedTime != null">UPDATED_TIME = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSupervisorById" parameterType="Long">
+        delete from supervisor where id = #{id}
+    </delete>
+
+    <delete id="deleteSupervisorByIds" parameterType="String">
+        delete from supervisor where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="selectSupervisorByUser" resultMap="SupervisorResult" parameterType="Long" >
+    <include refid="selectSupervisorVo"/>
+        <where>
+            supervisor.weichat_id in (
+        SELECT
+        t2.user_id
+        FROM
+        teacher_info t1
+        LEFT JOIN teacher_info t2 ON t1.id = t2.parent_id
+        <where>
+          <if test="parentId !=null and parentId!='' ">
+t1.id =#{parentId}
+</if>
+        </where>
+
+        )
+            <if test="status !=null and status!='' "> and supervisor.`status`=#{status}</if>
+            <if test="activeIndex !=null and activeIndex!='' "> and supervisor.active_index=#{activeIndex}</if>
+        </where>
+    </select>
+</mapper>
